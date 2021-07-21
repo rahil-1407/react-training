@@ -1,0 +1,109 @@
+Send us the answers to the questions above.
+
+Q. Can we write code without JSX?
+JSX is not a requirement for using React. Using React without JSX is especially convenient when you don’t want to set up compilation in your build environment.
+
+class Hello extends React.Component {
+  render() {
+    return <div>Hello {this.props.toWhat}</div>;
+  }
+}
+
+Without JSX :-
+ReactDOM.render(
+  <Hello toWhat="World" />,
+  document.getElementById('root')
+);
+
+class Hello extends React.Component {
+  render() {
+    return React.createElement('div', null, `Hello ${this.props.toWhat}`);
+  }
+}
+
+ReactDOM.render(
+  React.createElement(Hello, {toWhat: 'World'}, null),
+  document.getElementById('root')
+);
+
+Q. What is the benefit of writing ReactJs code with JSX?
+JSX helps us in keeping our code simpler and elegant when writing large pieces of code. According to the React docs, most people find it helpful as a visual aid when working with UI inside the JavaScript code. JSX also allows React to show more useful error and warning messages.
+
+Q. Does Browser understand JSX?
+But given JSX is not valid JavaScript, web browsers cant read it directly. ... That means that before the file gets to the web browser, a JSX compiler will translate any JSX into regular JavaScript.
+
+Q. What would happen if we directly run JSX in Browser?
+Browsers cannot read JSX because there is no inherent implementation for the browser engines to read and understand it. You can use babel to transform your jsx into native javascript and HTML which browser can understand.
+
+Q. What is state and why do we use it?
+The heart of every React component is its “state”, an object that determines how that component renders & behaves. In other words, “state” is what allows you to create components that are dynamic and interactive.
+
+Q. Can we directly modify or update state?
+No, use setState method
+
+Q. How do you update a state variable?
+setState method
+
+Q. Can anyone update the state variable?
+Yes
+
+Q. Are props mutable?
+Props are used to pass data from parent to child or by the component itself. They are immutable and thus will not be changed.
+
+Q. What can we pass in Props?(object, Components, string, functions)
+All 
+
+Q. What is the use of state variables?? Can’t we use normal variables?
+The reason is if you useState it rerenders the view. Variables by themselves only change bits in memory and the state of your app can get out of sync with the view. 
+
+Q. What is the use of props?
+“Props” is a special keyword in React, which stands for properties and is being used for passing data from one component to another. 
+
+Q. Is there any other way of passing data between components?
+Passing data from parent to child using props
+Passing data from child to parent employing callbacks
+Passing data among siblings. This can be achieved by one of the following methods:
+
+a. Integrating the methods mentioned above
+
+b. Using Redux
+
+c. Utilizing React's Context API.
+
+Q. When to use functional Components?
+React lifecycle methods (for example, componentDidMount) cannot be used in functional components.
+
+Q. Are there any advantages or disadvantages of using functional components?
+A functional component is just a plain JavaScript function that accepts props as an argument and returns a React element.	A class component requires you to extend from React. Component and create a render function which returns a React element.
+There is no render method used in functional components.	It must have the render() method returning HTML
+Also known as Stateless components as they simply accept data and display them in some form, that they are mainly responsible for rendering UI.	Also known as Stateful components because they implement logic and state.
+React lifecycle methods (for example, componentDidMount) cannot be used in functional components.	React lifecycle methods can be used inside class components (for example, componentDidMount).
+
+Q. What are the lifecycle methods of class components and in which order are they called?
+A components has mainly 3 phases namely Mounting,Updating and then Unmounting.
+In Mounting phase :-
+first constructor is called,
+then getDerivedStateFromProps
+then render
+then componentDidMount
+
+In Updating Phase :-
+first getDerivedStateFromProps is called if there is a change in the state or props of the component then shouldComponentUpdate is called if chnage then render will be called
+then getSnapshotBeforeUpdate
+then componentDidUpdate
+
+In Unmounting phase :-
+componentWillUnmount will run
+ 
+Q. What are keys and why do we use them in lists?
+Keys are used to React to identify which items in the list are changed, updated, or deleted. In other words, we can say that keys are used to give an identity to the elements in the lists.
+
+Q. Why does React maintain a Virtual DOM?
+Updating a real DOM is a slow process. So React uses a virtual DOM which updates faster.
+
+Working:- 
+The entire virtual DOM gets updated
+The virtual DOM gets compared to what it looked like before you updated it. React figures out which object have changed.
+This is called diffing.
+Now only the changed objects gets updated on Real DOM
+Changes on the Real DOM can cause the screen to change
