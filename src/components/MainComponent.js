@@ -1,40 +1,44 @@
 import { useState } from "react";
 import Form from "./Form";
-import Table from "./Table";
+import Usertable from "./Usertable";
 
 function MainComponent() {
   const [state, setState] = useState({
-    id: "",
+    id: Date.now(),
     name: "",
     email: "",
     dob: "",
     gender: "",
-    profilePic: "",
+    profilePic: null,
     education: "",
     password: "",
     confirmPassword: "",
-    formData: [],
   });
+
+  const [formData, setFormData] = useState([]);
 
   function handleChange(event) {
     const { name, value } = event.target;
     setState({
       ...state,
       [name]: value,
-      id: Date.now(),
     });
+  }
+
+  function handleFileChange(event) {
+    const imgFile = event.target.files[0];
+    if (imgFile.type === "image/jpeg" || imgFile.type === "image/jpg") {
+      setState({
+        ...state,
+        profilePic: URL.createObjectURL(event.target.files[0]),
+      });
+    }
   }
 
   function validateEmail() {
     let reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     if (reg.test(state.email)) return true;
     else return false;
-  }
-
-  function validateFile() {
-    let allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-    if (!allowedExtensions.exec(state.profilePic)) return false;
-    else return true;
   }
 
   function validatePassword() {
@@ -47,7 +51,7 @@ function MainComponent() {
     else if (!validateEmail()) return false;
     else if (state.dob === "") return false;
     else if (state.gender === "") return false;
-    else if (!validateFile()) return false;
+    else if (state.profilePic === null) return false;
     else if (state.education === "") return false;
     else if (!validatePassword() || state.password !== state.confirmPassword)
       return false;
@@ -55,32 +59,24 @@ function MainComponent() {
   }
 
   function handleSubmit(e) {
+    document.getElementById("form").reset();
     e.preventDefault();
-    if (handleValidation()) {
-      const newUser = {
-        id: state.id,
-        name: state.name,
-        email: state.email,
-        dob: state.dob,
-        gender: state.gender,
-        profilePic: state.profilePic,
-        education: state.education,
-        password: state.password,
-        confirmPassword: state.confirmPassword,
-      };
 
-      const formData = [...state.formData, newUser];
+    if (handleValidation(e)) {
+      const filteredFormData = formData.filter((item) => item.id !== state.id);
+      filteredFormData.push(state);
+      setFormData(filteredFormData);
+
       setState({
-        id: "",
+        id: Date.now(),
         name: "",
         email: "",
         dob: "",
         gender: "",
-        profilePic: "",
+        profilePic: null,
         education: "",
         password: "",
         confirmPassword: "",
-        formData: formData,
       });
     } else {
       alert("You have entered some invalid data!");
@@ -88,29 +84,13 @@ function MainComponent() {
   }
 
   function handleDelete(id) {
-    const filteredFormData = state.formData.filter((item) => item.id !== id);
-    setState({
-      ...state,
-      formData: filteredFormData,
-    });
+    const filteredFormData = formData.filter((item) => item.id !== id);
+    setFormData(filteredFormData);
   }
 
-  function handleEdit(event,id) {
-    const { name, value } = event.target;
-    console.log(name + " " + value)
-    const formData = state.formData;
-    formData.map(function(item) {
-      if (item.id === id) {
-        item.name = value;
-      }
-      return item;
-    });
-
-    setState({
-      ...state,
-      [name]: value,
-      formData: formData
-    });
+  function handleEdit(id) {
+    const filteredFormData = formData.filter((item) => item.id === id);
+    setState(filteredFormData[0]);
   }
 
   return (
@@ -126,10 +106,11 @@ function MainComponent() {
         confirmPassword={state.confirmPassword}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        handleFileChange={handleFileChange}
       />
       <br /> <br />
-      <Table
-        items={state.formData}
+      <Usertable
+        items={formData}
         handleDelete={handleDelete}
         handleEdit={handleEdit}
       />
