@@ -1,0 +1,30 @@
+Should you keep all component states in the Redux store?
+The answer is no, you don't have to. It is totally fine to use a mix of React component state and Redux state. You might for example use non-critical UI state inside React components, like if a checkbox is checked or not.
+
+Explain Redux in your own words.
+Redux allows you to manage state for your web applications built in any JavaScript framework such as React, Meteor, or Angular.
+
+What are reducers and actions?
+A reducer is a function that determines changes to an application's state. It uses the action it receives to determine this change. ... Redux relies heavily on reducer functions that take the previous state and an action in order to execute the next state.
+
+Why should a reducer return a new state object?
+Reducers specify how the application's state changes in response to actions sent to the store. Remember that actions only describe what happened, but don't describe how the application's state changes. So whenever you call an action, reducer must return a new state based on that action.
+
+When an action is dispatched, are all the reducers called?
+Yes - all the reducers will get called when you dispatch the action. 
+
+What are the core principles of Redux?
+Redux can be described in three fundamental principles:
+Single source of truth. The global state of your application is stored in an object tree within a single store. ...
+State is read-only. The only way to change the state is to emit an action, an object describing what happened. ...
+Changes are made with pure functions.
+
+Why should you use redux in your app?
+Redux allows you to manage your app's state in a single place and keep changes in your app more predictable and traceable. It makes it easier to reason about changes occurring in your app. But all of these benefits come with tradeoffs and constraints.
+
+How Redux Works - Redux Workflow?
+React — Redux workflow in 4 steps — Beginner Friendly Guide
+A user interacts with a frontend component. ...
+An action usually contains a type (or identifier) and payload (or data). ...
+Once an action is dispatched, it is received by a reducer. ...
+The changed state is again utilized to show the updated component.

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     width: 300,
+    textAlign: "center"
   },
 }));
 
@@ -103,10 +104,6 @@ function Form(props) {
         </span>
         <Input
           className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          label="Upload a profile pic"
           name="profilePic"
           type="file"
           onChange={handleFileChange}
