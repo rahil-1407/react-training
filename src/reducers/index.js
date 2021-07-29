@@ -1,8 +1,8 @@
-import submitForm from "./submitForm";
+import reducer from "./reducer";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  submitForm,
+  reducer,
 });
 
 export default rootReducer;

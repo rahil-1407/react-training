@@ -1,11 +1,13 @@
 import { useState } from "react";
 import Form from "./Form";
 import Usertable from "./Usertable";
-import { useDispatch} from 'react-redux';
-import { submit } from '../actions/index'
+import { useDispatch, useSelector } from "react-redux";
+import { ActionCreators } from "../actions/actionCreator";
 
 function MainComponent() {
   const dispatch = useDispatch();
+  const formData = useSelector((state) => state.reducer.formData);
+
   const [state, setState] = useState({
     id: Date.now(),
     name: "",
@@ -17,8 +19,6 @@ function MainComponent() {
     password: "",
     confirmPassword: "",
   });
-
-  const [formData, setFormData] = useState([]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -66,10 +66,9 @@ function MainComponent() {
     e.preventDefault();
 
     if (handleValidation(e)) {
-      dispatch(submit(state))
       const filteredFormData = formData.filter((item) => item.id !== state.id);
       filteredFormData.push(state);
-      setFormData(filteredFormData);
+      dispatch(ActionCreators.alterUser(filteredFormData));
 
       setState({
         id: Date.now(),
@@ -89,7 +88,7 @@ function MainComponent() {
 
   function handleDelete(id) {
     const filteredFormData = formData.filter((item) => item.id !== id);
-    setFormData(filteredFormData);
+    dispatch(ActionCreators.deleteUser(filteredFormData));
   }
 
   function handleEdit(id) {
@@ -113,11 +112,7 @@ function MainComponent() {
         handleFileChange={handleFileChange}
       />
       <br /> <br />
-      <Usertable
-        items={formData}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
-      />
+      <Usertable handleDelete={handleDelete} handleEdit={handleEdit} />
     </div>
   );
 }
