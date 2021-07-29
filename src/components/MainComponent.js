@@ -1,8 +1,11 @@
 import { useState } from "react";
 import Form from "./Form";
 import Usertable from "./Usertable";
+import { useDispatch} from 'react-redux';
+import { submit } from '../actions/index'
 
 function MainComponent() {
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     id: Date.now(),
     name: "",
@@ -63,6 +66,7 @@ function MainComponent() {
     e.preventDefault();
 
     if (handleValidation(e)) {
+      dispatch(submit(state))
       const filteredFormData = formData.filter((item) => item.id !== state.id);
       filteredFormData.push(state);
       setFormData(filteredFormData);
